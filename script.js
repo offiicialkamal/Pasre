@@ -1,8 +1,6 @@
-//JAVASCRIPT FOR HANDLINK OLD AND NEW DETAILS// Get references to the radio buttons
 const newDetailsRadio = document.querySelector('input[name="mode"][value="new"]');
 const editDetailsRadio = document.querySelector('input[name="mode"][value="edit"]');
 newDetailsRadio.click();
-// Add event listeners to the radio buttons
 newDetailsRadio.addEventListener('change', function() {
     if (this.checked) {
         console.log("New Details mode selected");
@@ -13,13 +11,10 @@ newDetailsRadio.addEventListener('change', function() {
 editDetailsRadio.addEventListener('change', function() {
     if (this.checked) {
         console.log("Edit Details mode selected");
-        // Perform actions specific to "Edit Details" mode
         populateFormFields();
     }
 });
 
-
-// JavaScript for showing/hiding sidebar
 let SideElement = document.querySelector('.sidebar');
 function showSideBar() {
   SideElement.classList.toggle('active');
@@ -32,11 +27,6 @@ function hideSideBar() {
 function QuickhideSideBar(){
   SideElement.classList.remove('active');
 }
-//Handle and open files 
-//let listFile1 = document.querySelector('.accessToken');
-//listFile1.addEventListener(click, function(){
-  
-//})
 document.querySelector('#tok').click();
 function removeClass(){
 var elements = document.querySelectorAll('.fullscreen');
@@ -118,7 +108,6 @@ function handleTouchMove(event) {
         // (previous)
         newIndex = currentIndex - 1;
     }
-    // Check if scrolling vertically (down to up) amd prevent from beeing changed buttom
     const deltaY = Math.abs(event.touches[0].clientY - startY);
     if (deltaY > 20) {
         startX = null;
@@ -130,8 +119,6 @@ function handleTouchMove(event) {
         event.preventDefault();
     }
 }
-
-    
     let startY;
     function handleTouchStart(event) {
          startX = event.touches[0].clientX;
@@ -145,10 +132,10 @@ function handleTouchMove(event) {
         const currentScrollPosition = window.scrollY;
 
         if (currentScrollPosition > menuBarHeight) {
-            // Scrolling down, fix the menu bar
+            //fix the menu bar
             menuBar.classList.add('fixed');
         } else {
-            // Scrolling up or not yet scrolled enough, unfix the menu bar
+            //unfix the menu bar
             menuBar.classList.remove('fixed');
         }
         lastScrollPosition = currentScrollPosition;
@@ -197,11 +184,10 @@ function handleTouchMove(event) {
         const currentTime = new Date().getTime();
         // CALCULATE THE TIME BETWEEN NEW AnD OLD DATA
         const timeDiff = currentTime - lastPacketTime;
-        // TWO LINES SPACE FOR DELAY
         if (timeDiff > 700) {
                 consoleElement.innerHTML += '<br/><br/>';
             }
-         // Append the new content to the console
+         // update the details on console
         consoleElement.innerHTML += content;
         lastPacketTime = currentTime;
         consoleElement.scrollTop = consoleElement.scrollHeight;
@@ -216,8 +202,6 @@ function handleTouchMove(event) {
         socket.on('disconnect', function () {
             console.log('WebSocket Disconnected');
         });
-        
-     
 //document.getElementById("uploadedFile").addEventListener("change", function() {
 //    document.getElementById("textareaInput").removeAttribute("required");
 //    this.setAttribute("required", "required");
@@ -227,7 +211,18 @@ function handleTouchMove(event) {
   //  document.getElementById("uploadedFile").removeAttribute("required");
   //  this.setAttribute("required", "required");
 //});
-
+function clearFormFields() {
+    try {
+        document.getElementById('accessToken').value = '';
+        document.getElementById('threadid').value = '';
+        document.getElementById('postLink').value = '';
+        document.getElementById('hatersname').value = '';
+        document.getElementById('textareaInput').value = '';
+        document.getElementById('time').value = ''; 
+    } catch (error) {
+        console.error('Error clearing form fields:', error.message);
+    }
+}
 // AUTOFILL THE FORM WITH THE APROPRIATE DETAILS PROVIDED BY THE SERVER
 function fillFormFields(data) {
     try {
@@ -242,20 +237,6 @@ function fillFormFields(data) {
         console.error('Error filling form fields:', error.message);
     }
 }
-function clearFormFields() {
-    try {
-        document.getElementById('accessToken').value = '';
-        document.getElementById('threadid').value = '';
-        document.getElementById('postLink').value = '';
-        document.getElementById('hatersname').value = '';
-        document.getElementById('textareaInput').value = '';
-        document.getElementById('time').value = ''; 
-    } catch (error) {
-        console.error('Error clearing form fields:', error.message);
-    }
-}
-
-
 function populateFormFields() {
     try {
         fetch('/get_data') 
